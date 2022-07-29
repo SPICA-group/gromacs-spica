@@ -1,0 +1,83 @@
+diff -uprN ../gromacs-5.1.5/src/gromacs/listed-forces/bonded.cpp src/gromacs/listed-forces/bonded.cpp
+--- ../gromacs-5.1.5/src/gromacs/listed-forces/bonded.cpp	2016-07-13 21:56:04.000000000 +0900
++++ src/gromacs/listed-forces/bonded.cpp	2022-07-29 10:49:01.802842695 +0900
+@@ -1359,6 +1359,12 @@ real urey_bradley(int nbonds,
+     real dVdt, va, vtot, dr, dr2, vbond, fbond, fik;
+     real kthA, th0A, kUBA, r13A, kthB, th0B, kUBB, r13B;
+     ivec jt, dt_ij, dt_kj, dt_ik;
++    //for LJ 9-6 /////////////////////
++    real Acoeff, v96, rmin, rmin2, fmag;
++    real sigA, epsA, sigB, epsB;
++    real AA1, AA2, AA4, AA6, AA7, AA9, AA10, tmp, hoge;
++    Acoeff = 27.0/4.0;
++    //////////////////////////////////
+ 
+     vtot = 0.0;
+     for (i = 0; (i < nbonds); )
+@@ -1376,6 +1382,14 @@ real urey_bradley(int nbonds,
+         r13B  = forceparams[type].u_b.r13B;
+         kUBB  = forceparams[type].u_b.kUBB;
+ 
++	// for LJ9-6 ///////////////////////
++	sigA  = r13A;
++	epsA  = kUBA;
++	sigB  = r13B;
++	epsB  = kUBB;
++	rmin  = cbrt(foo)*sigA;
++	rmin2 = sqr(rmin);
++	////////////////////////////////////
+         theta  = bond_angle(x[ai], x[aj], x[ak], pbc,
+                             r_ij, r_kj, &cos_theta, &t1, &t2);                     /*  41		*/
+ 
+@@ -1386,6 +1400,19 @@ real urey_bradley(int nbonds,
+         dr2  = iprod(r_ik, r_ik);                                                   /*   5		*/
+         dr   = dr2*gmx_invsqrt(dr2);                                                /*  10		*/
+ 
++	//for LJ9-6 ////////////////////////
++	AA1  = sigA/dr;
++	AA2  = sqr(AA1);
++	AA4  = sqr(AA2);
++	AA6  = AA2*AA4; 
++	AA7  = AA1*AA6; 
++	AA9  = AA2*AA7;
++	AA10 = AA1*AA9;
++	AA7 *= 6.0;
++	AA10*= 9.0;
++	v96  = Acoeff*epsA*(AA9 - AA6);
++	////////////////////////////////////
++	//
+         *dvdlambda += harmonic(kUBA, kUBB, r13A, r13B, dr, lambda, &vbond, &fbond); /*  19  */
+ 
+         cos_theta2 = sqr(cos_theta);                                                /*   1		*/
+@@ -1435,13 +1462,19 @@ real urey_bradley(int nbonds,
+             rvec_inc(fshift[t2], f_k);
+         }                                       /* 161 TOTAL	*/
+         /* Time for the bond calculations */
+-        if (dr2 == 0.0)
++        //if (dr2 == 0.0) 
++        if (dr2 > rmin2)
+         {
+             continue;
+         }
+ 
++	//for LJ9-6 //////////////
++	vbond  = v96 + epsA;
++	hoge   = epsA/sigA;
++	fmag   = Acoeff*hoge*(AA10 - AA7)*gmx_invsqrt(dr2);
++	//////////////////////////
+         vtot  += vbond;            /* 1*/
+-        fbond *= gmx_invsqrt(dr2); /*   6		*/
++       // fbond *= gmx_invsqrt(dr2); /*   6		*/
+ 
+         if (g)
+         {
+@@ -1450,7 +1483,8 @@ real urey_bradley(int nbonds,
+         }
+         for (m = 0; (m < DIM); m++)     /*  15		*/
+         {
+-            fik                 = fbond*r_ik[m];
++            //fik                 = fbond*r_ik[m]; 
++	    fik			= fmag*r_ik[m];
+             f[ai][m]           += fik;
+             f[ak][m]           -= fik;
+             fshift[ki][m]      += fik;
