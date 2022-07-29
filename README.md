@@ -10,7 +10,10 @@ NOTE: After you apply this patch to gromacs source codes, YOU CAN NO LONGER USE 
 # Prerequisites
 
 Source code of GROMACS-2019.6 : gromacs-2019.6.tar.gz  
-https://manual.gromacs.org/documentation/2019.6/download.html
+https://manual.gromacs.org/documentation/2019.6/download.html  
+or  
+Source code of GROMACS-5.1.5 : gromacs-5.1.5.tar.gz  
+https://manual.gromacs.org/documentation/5.1.5/download.html  
 
 # Installation  
 Apply patch command in the top source directory.  
