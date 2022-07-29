@@ -27,8 +27,9 @@ Apply patch command in the top source directory
 Then, build the codes by following the GROMACS installation guide  
 https://manual.gromacs.org/current/install-guide/index.html  
 
-For reversed patch    
+For reversed patch, excute the following command in the top source directory  
 
+    cd gromacs-2019.6/  
     patch -p2 -R < ../gromacs-SPICA/gromacs-2019.6-spica_angle.patch  
 
 # Authors
