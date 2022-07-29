@@ -18,13 +18,15 @@ https://manual.gromacs.org/documentation/5.1.5/download.html
 # Installation  
 Apply patch command in the top source directory.  
 
+    git clone git@github.com:SPICA-group/gromacs-SPICA.git  
+    wget http://ftp.gromacs.org/pub/gromacs/gromacs-2019.6.tar.gz
     tar xvzf gromacs-2019.6.tar.gz  
     cd gromacs-2019.6/  
-    patch -p2 < gromacs-2019.6-spica_angle.patch  
+    patch -p2 < ../gromacs-SPICA/gromacs-2019.6-spica_angle.patch  
 
 For reversed patch    
 
-    patch -p2 -R < gromacs-2019.6-spica_angle.patch  
+    patch -p2 -R < ../gromacs-SPICA/gromacs-2019.6-spica_angle.patch  
 
 
 # Authors
