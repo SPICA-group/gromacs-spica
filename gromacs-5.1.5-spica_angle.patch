@@ -8,7 +8,7 @@ diff -uprN ../gromacs-5.1.5/src/gromacs/listed-forces/bonded.cpp src/gromacs/lis
 +    //for LJ 9-6 /////////////////////
 +    real Acoeff, v96, rmin, rmin2, fmag;
 +    real sigA, epsA, sigB, epsB;
-+    real AA1, AA2, AA4, AA6, AA7, AA9, AA10, tmp, hoge;
++    real AA1, AA2, AA4, AA6, AA7, AA9, AA10, hoge;
 +    Acoeff = 27.0/4.0;
 +    //////////////////////////////////
  
@@ -23,7 +23,7 @@ diff -uprN ../gromacs-5.1.5/src/gromacs/listed-forces/bonded.cpp src/gromacs/lis
 +	epsA  = kUBA;
 +	sigB  = r13B;
 +	epsB  = kUBB;
-+	rmin  = cbrt(foo)*sigA;
++	rmin  = 1.144714243*sigA;
 +	rmin2 = sqr(rmin);
 +	////////////////////////////////////
          theta  = bond_angle(x[ai], x[aj], x[ak], pbc,
