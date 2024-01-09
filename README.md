@@ -64,7 +64,7 @@ An example GROMACS mdp file (`npt.mdp`, by default) for SPICA will be also gener
 * `table.xvg` (other pairs, LJ9-6)
 * `npt.mdp` 
 
-The command-lines to execute the GROMACS commands `grompp` and `mdrun` will look like:
+The command-lines to execute the two commands, `grompp` and `mdrun`, of **GROMACS patched for SPICA** will look like:
 ```bash
 gmx_mpi grompp -f npt.mdp -c final.pdb -p topol.top -n CGindex.ndx -o npt.tpr -maxwarn 5
 gmx_mpi mdrun -v -deffnm npt -table table.xvg
