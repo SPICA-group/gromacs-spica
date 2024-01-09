@@ -4,7 +4,7 @@ This patch replaces the [bond-angle cross potential](https://manual.gromacs.org/
 with the [SPICA angle potential](https://www.spica-ff.org/forcefield.html), incorporating a correction LJ potential term
 to prevent an implausibly bent structure in MD simulations.  
 
-**NOTE**: Upon applying this patch to GROMACS source codes, you can no longer use the bond-angle cross term (angle index = 4) in GROMACS programs built with the codes. Additionaly, GPU acceleration in GROMACS does not function for MD simulations with SPICA due to the necessity of applying tabulated potentials for nonboneded interactions used in SPICA. 
+**NOTE**: Upon applying this patch to GROMACS source codes, you can no longer use the bond-angle cross term (angle index = 4) in GROMACS programs built with the codes. Additionaly, GPU acceleration in GROMACS will not work in MD simulations with SPICA because it requires the application of tabulated potentials for nonboneded interactions used in SPICA. 
 
 # Prerequisites
 Source code of GROMACS-2019.6 : gromacs-2019.6.tar.gz
@@ -41,8 +41,8 @@ The command-line to prepare some GROMACS input files will be like:
 ```bash
 cg_spica setup_gmx DOPC.top 128 WAT.top 3000 spica_db.prm 
 ```
-PDB files are unnecessary for this command because the generation of GROMACS itp and index files by this command does not require system configuration information.  
-Upon excuting the command-line, the generated files will include:
+The PDB files are not needed for this command because the generation of GROMACS itp and index files by this command does not require any system configuration information.  
+Upon excuting the command-line, the generated files will contain the following:
 * `topol.top` (system topology file)
 * `toppar/`
   * `SPICA.itp` (parameter file)
