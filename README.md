@@ -43,13 +43,13 @@ cg_spica setup_gmx DOPC.top 128 WAT.top 3000 spica_db.prm
 ```
 PDB files are unnecessary for this command because the generation of GROMACS itp and index files by this command does not require system configuration information.  
 Upon excuting the command-line, the generated files will include:
-* `topol.top` (System topology file)
+* `topol.top` (system topology file)
 * `toppar/`
   * `SPICA.itp` (parameter file)
   * `{Molecule1}.itp` (topology files for each molecule)
   * `{Molecule2}.itp`
   * `...`
-* `CGindex.ndx` (GROMACS index file)
+* `CGindex.ndx` (index file)
 * `out.psf` (PSF file for visualization)
 
 Tabulated potentials for nonbonded interations applied in SPICA, namely, LJ12-4 and LJ9-6 potentials (see the [Force Field](https://www.spica-ff.org/forcefield.html) page) require table files formatted following the 
