@@ -32,11 +32,11 @@ patch -p2 -R < ../gromacs-SPICA/gromacs-2019.6-spica_angle.patch
 ```
 # Usage example
 Tutorials for preparing input files for CG-MD simulations with SPICA using LAMMPS are available on the [SPICA website](https://www.spica-ff.org/tutorial_protein.html).
-For GROMACS usage, employ the command `cg_spica setup_gmx` from [spica-tools](https://github.com/SPICA-group/spica-tools), 
-instead of `cg_spica setup_lmp` for LAMMPS, to generate topology, index, and parameter files.
+For GROMACS usage, employ the command [setup_gmx](https://spica-group.github.io/spica-tools/setup_gmx.html) from [spica-tools](https://github.com/SPICA-group/spica-tools), 
+instead of [setup_lmp](https://spica-group.github.io/spica-tools/setup_lmp.html) for LAMMPS, to generate topology, index, and parameter files.
 
 For instance, in [Step 2 of the tutorial for lipid membrane systems](https://www.spica-ff.org/tutorial_lipid2.html),
-the process before using `cg_spica setup_lmp` will be the identical for GROMACS simulations with SPICA. 
+the process before using `setup_lmp` will be the identical for GROMACS simulations with SPICA. 
 The command-line to prepare some GROMACS input files will be like:
 ```bash
 cg_spica setup_gmx DOPC.top 128 WAT.top 3000 spica_db.prm 
@@ -54,11 +54,12 @@ Upon excuting the command-line, the generated files will contain the following:
 
 Tabulated potentials for nonbonded interations applied in SPICA, namely, LJ12-4 and LJ9-6 potentials (see the [Force Field](https://www.spica-ff.org/forcefield.html) page) require table files formatted following the 
 [GROMACS manual for using tabulated potentials](https://manual.gromacs.org/current/reference-manual/special/tabulated-interaction-functions.html).
-Generate these files with the following command:
+Generate these files with the following command [gen_gmxin](https://spica-group.github.io/spica-tools/gen_gmxin.html):
 ```bash
 cg_spica gen_gmxin -pdb final.pdb -ndx CGindex.ndx
 ```
-An example GROMACS mdp file (`npt.mdp`, by default) for SPICA will be also generated. The output files include:
+An example GROMACS mdp file (`npt.mdp`, by default) for SPICA will be also generated (please add `-pspica` option when using pSPICA).
+The output files include:
 * `table_SOLW_SOLW.xvg` (water-water, LJ12-4)
 * `table_LJ124W_SOLW.xvg` (water-others, LJ12-4)
 * `table.xvg` (other pairs, LJ9-6)
