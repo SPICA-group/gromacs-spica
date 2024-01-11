@@ -58,7 +58,7 @@ Generate these files with the following command [gen_gmxin](https://spica-group.
 ```bash
 cg_spica gen_gmxin -pdb final.pdb -ndx CGindex.ndx
 ```
-An example GROMACS mdp file (`npt.mdp`, by default) for SPICA will be also generated (please add `-pspica` option when using pSPICA).
+An example GROMACS mdp file (`npt.mdp`, by default) for SPICA will be also generated (please add `-pspica` option when using the pSPICA models).
 The output files include:
 * `table_SOLW_SOLW.xvg` (water-water, LJ12-4)
 * `table_LJ124W_SOLW.xvg` (water-others, LJ12-4)
